@@ -1,6 +1,7 @@
 const express = require('express');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -15,9 +16,9 @@ var score, label,sadness,joy,fear,disgust,anger,text;
 const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
   version: '2022-04-07',
   authenticator: new IamAuthenticator({
-    apikey: 'lJnj89_rTFjGVW3Oa9HhjdhDIJC0OWij7usZ-FWylRX3',
+    apikey: process.env.key,
   }),
-  serviceUrl: 'https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/02d0791c-3f24-4379-93d3-908908570bc3',
+  serviceUrl: process.env.URL,
 });
 
 app.get('/',function(req,res){
