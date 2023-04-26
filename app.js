@@ -45,9 +45,13 @@ app.get('/',function(req,res){
 
 app.post('/',function(req,res){
      text=req.body.text;
-    // console.log(text);
 
-    
+  if (text.length===0) {
+   console.log('Bro are you fucking stupid?'); 
+   res.redirect('/')
+  }
+  else{
+ 
 const analyzeParams = {
     'text': text,
     'features': {
@@ -66,8 +70,6 @@ const analyzeParams = {
   
   naturalLanguageUnderstanding.analyze(analyzeParams)
     .then(analysisResults => {
-      // console.log(JSON.stringify(analysisResults, null, 2));
-
 
        score= analysisResults.result.keywords[0].sentiment.score;
        label =analysisResults.result.keywords[0].sentiment.label;
@@ -78,32 +80,16 @@ const analyzeParams = {
        disgust =analysisResults.result.keywords[0].emotion.disgust;
        anger = analysisResults.result.keywords[0].emotion.anger;
 
-
-      // console.log('Score :'+ score);
-      // console.log('Label :'+ label);
-      // // console.log(analysisResults.result.keywords[0].emotion);
-      // console.log('Sadness :'+ sadness);
-      // console.log('Joy :'+joy);
-      // console.log('Fear :' +fear);
-      // console.log('Disgust: '+ disgust);
-      // console.log('Anger: '+ anger);
-
-
       res.redirect('/');
 
     })
     .catch(err => {
       console.log('error:', err);
     });
-
+  }
   
 
 });
-
-
-
-
-
 
 let port = process.env.PORT;
 if (port == null || port == "") {
